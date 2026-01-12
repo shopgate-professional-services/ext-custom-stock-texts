@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getProductStock } from '@shopgate/engage/product';
+import { getProductAvailability } from '@shopgate/engage/product';
 import {
   AVAILABILITY_STATE_OK,
   AVAILABILITY_STATE_WARNING,
@@ -8,49 +8,62 @@ import {
 import { available, lowStock, unavailable } from '../../config';
 
 /**
- * Determines the availability state and stock text based on quantity thresholds.
+ * Returns the configured label for a given availability state.
  *
- * @param {Object} state state.
- * @param {Object} props Component own props.
- * @param {string} [props.variantId] Product variant identifier.
- * @param {string} [props.productId] Base product identifier.
- * @param {string} props.id Product identifier on PDL.
+ * @param {string} availabilityState Availability state
+ * @returns {string} Configured stock text for the given state, or an empty string
+ */
+const pickMappedText = (availabilityState) => {
+  switch (availabilityState) {
+    case AVAILABILITY_STATE_ALERT:
+      return unavailable || '';
+    case AVAILABILITY_STATE_WARNING:
+      return lowStock || '';
+    case AVAILABILITY_STATE_OK:
+    default:
+      return available || '';
+  }
+};
+
+/**
+ * Resolves the availability state.
  *
- * @returns {{
- *   stockText: string,
- *   availability: string
- * }}
+ * @param {Object} state Redux state
+ * @param {Object} props Component props
+ * @returns {string} Availability state ("ok" | "warning" | "alert")
+ */
+const resolveAvailabilityState = (state, props) => {
+  // Variant sheet
+  if (typeof props.state === 'string') {
+    return props.state;
+  }
+
+  // Favorites
+  if (props.availability && typeof props.availability.state === 'string') {
+    return props.availability.state;
+  }
+
+  // PDP
+  const productAvailability = getProductAvailability(state, props);
+  if (productAvailability && typeof productAvailability.state === 'string') {
+    return productAvailability.state;
+  }
+
+  return AVAILABILITY_STATE_OK;
+};
+
+/**
+ * Redux mapStateToProps.
+ *
+ * @param {Object} state Redux state
+ * @param {Object} props Component props
+ * @returns {{ availability: string, stockText: string }}
  */
 const mapStateToProps = (state, props) => {
-  const resolvedId = props.variantId || props.productId || props.id;
-  const stockInfo = getProductStock(state, { productId: resolvedId });
-
-  if (!stockInfo || typeof stockInfo.quantity !== 'number') {
-    return {
-      stockText: '',
-      availability: AVAILABILITY_STATE_OK,
-    };
-  }
-
-  const stockQuantity = stockInfo.quantity;
-
-  if (stockQuantity <= 0) {
-    return {
-      stockText: unavailable || '',
-      availability: AVAILABILITY_STATE_ALERT,
-    };
-  }
-
-  if (stockQuantity <= 5) {
-    return {
-      stockText: lowStock || '',
-      availability: AVAILABILITY_STATE_WARNING,
-    };
-  }
-
+  const availability = resolveAvailabilityState(state, props);
   return {
-    stockText: available || '',
-    availability: AVAILABILITY_STATE_OK,
+    availability,
+    stockText: pickMappedText(availability),
   };
 };
 

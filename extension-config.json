@@ -3,12 +3,20 @@
   "id": "@shopgate-project/custom-stock-texts",
   "components": [
     {
-      "id": "CustomStockText",
+      "id": "StockTextPdp",
       "path": "frontend/portals/CustomStockText",
       "target": [
-        "product.availability",
+        "product.stock-info",
         "product-item.availability",
         "favorites.availability-text"
+      ],
+      "type": "portals"
+    },
+    {
+      "id": "StockTextSheet",
+      "path": "frontend/portals/CustomStockText",
+      "target": [
+        "product.variant-select.picker.availability"
       ],
       "type": "portals"
     }

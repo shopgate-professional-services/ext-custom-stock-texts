@@ -10,6 +10,7 @@ The component is rendered in the following portals:
 - `product.availability`
 - `product-item.availability`
 - `favorites.availability-text`
+- `product.variant-select.picker.availability`
 
 ---
 

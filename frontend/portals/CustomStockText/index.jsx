@@ -10,14 +10,14 @@ import {
 import connect from './connector';
 
 /**
- * Renders a stock text with visual indication of product availability.
+ * Renders a configured stock/availability label.
  *
- * @param {Object} props Component props.
- * @param {string} props.availability Availability state identifier.
- * @param {string} props.stockText Text describing the current stock state.
- * @returns {JSX.Element|null} Stock text element or null when no text should be shown.
+ * @param {Object} props Component props
+ * @param {string} props.availability Availability state ("ok" | "warning" | "alert")
+ * @param {string} props.stockText Display text derived from configuration
+ * @returns {JSX.Element}
  */
-const CustomStockText = ({ availability, stockText }) => (
+const CustomStockText = ({ stockText, availability }) => (
   <Availability
     text={stockText}
     state={availability}
@@ -39,4 +39,6 @@ CustomStockText.defaultProps = {
   stockText: '',
 };
 
-export default withCurrentProduct(connect(CustomStockText));
+export const StockTextPdp = withCurrentProduct(connect(CustomStockText));
+export const StockTextSheet = connect(CustomStockText);
+export default StockTextPdp;
