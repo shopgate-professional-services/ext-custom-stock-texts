@@ -57,5 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# IDE
+.idea/
+.vscode/
+
 frontend/package-lock.json
 frontend/config.json

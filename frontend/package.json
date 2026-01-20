@@ -3,12 +3,7 @@
   "version": "1.0.0",
   "description": "Adds configurable stock texts based on a product’s stock level",
   "license": "Apache-2.0",
-  "scripts": {
-    "test": "jest",
-    "test:watch": "npm run test -- --watch",
-    "coverage": "jest --coverage",
-    "coverage:watch": "npm run coverage -- --watch"
-  },
+  "scripts": {},
   "devDependencies": {
     "eslint": "^7.9.0",
     "@shopgate/eslint-config": "^7.22.0",

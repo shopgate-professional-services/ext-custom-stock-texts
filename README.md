@@ -1,7 +1,6 @@
 # Custom Stock Texts Extension
 
-This extension renders configurable stock availability texts on the product page
-based on the current product stock quantity.
+This extension renders configurable stock availability texts on product pages, within product listings, in the favorites section, and in the variant picker, based on the current product stock quantity.
 
 ## Placement
 
