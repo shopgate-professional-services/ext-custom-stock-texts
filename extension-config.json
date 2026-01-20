@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0",
+  "id": "@shopgate-project/custom-stock-texts",
+  "components": [
+    {
+      "id": "StockTextPdp",
+      "path": "frontend/portals/CustomStockText",
+      "target": [
+        "product.stock-info",
+        "product-item.availability",
+        "favorites.availability-text"
+      ],
+      "type": "portals"
+    },
+    {
+      "id": "StockTextSheet",
+      "path": "frontend/portals/CustomStockText",
+      "target": [
+        "product.variant-select.picker.availability"
+      ],
+      "type": "portals"
+    }
+  ],
+  "configuration": {
+    "available": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "",
+      "params": {
+        "label": "Available Text",
+        "type": "text"
+      }
+    },
+    "lowStock": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "",
+      "params": {
+        "label": "Low Stock Text",
+        "type": "text"
+      }
+    },
+    "unavailable": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "",
+      "params": {
+        "label": "Unavailable Text",
+        "type": "text"
+      }
+    }
+  }
+}
